@@ -10,8 +10,11 @@ class CSVOperationsApp:
     def __init__(self, root):
         self.root = root
         self.root.title("CSV Operations - By Kiran Beethoju")
-        self.root.geometry("800x750")
+        self.root.geometry("850x800")
         self.root.resizable(True, True)
+        
+        # Configure colors
+        self.root.configure(bg="#f0f0f0")
         
         # Variables
         self.input_delimiter = tk.StringVar(value="LF")
@@ -25,11 +28,59 @@ class CSVOperationsApp:
         self.unique_records = []
         self.duplicate_records = []
         
+        self.setup_styles()
         self.setup_ui()
         
+    def setup_styles(self):
+        """Configure colorful styles"""
+        style = ttk.Style()
+        style.theme_use('clam')
+        
+        # Configure button styles
+        style.configure('Action.TButton', 
+                       background='#4CAF50', 
+                       foreground='white',
+                       font=('Arial', 10, 'bold'),
+                       padding=10)
+        style.map('Action.TButton',
+                 background=[('active', '#45a049'), ('pressed', '#3d8b40')])
+        
+        style.configure('Control.TButton',
+                       background='#2196F3',
+                       foreground='white',
+                       font=('Arial', 9),
+                       padding=8)
+        style.map('Control.TButton',
+                 background=[('active', '#0b7dda'), ('pressed', '#0a6bc2')])
+        
+        style.configure('Reset.TButton',
+                       background='#ff9800',
+                       foreground='white',
+                       font=('Arial', 9),
+                       padding=8)
+        style.map('Reset.TButton',
+                 background=[('active', '#e68900'), ('pressed', '#cc7700')])
+        
+        style.configure('Help.TButton',
+                       background='#9c27b0',
+                       foreground='white',
+                       font=('Arial', 9),
+                       padding=8)
+        style.map('Help.TButton',
+                 background=[('active', '#7b1fa2'), ('pressed', '#6a1b9a')])
+        
+        # Configure label frame styles
+        style.configure('Header.TLabelframe', 
+                      background='#f0f0f0',
+                      borderwidth=0)
+        style.configure('Header.TLabelframe.Label',
+                       background='#f0f0f0',
+                       foreground='#1976D2',
+                       font=('Arial', 11, 'bold'))
+        
     def setup_ui(self):
-        # Main container
-        main_frame = ttk.Frame(self.root, padding="10")
+        # Main container with background color
+        main_frame = tk.Frame(self.root, bg="#f0f0f0", padx=10, pady=10)
         main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
         
         # Configure grid weights
@@ -40,29 +91,36 @@ class CSVOperationsApp:
         main_frame.rowconfigure(4, weight=1)
         
         # Header Section with Author
-        header_frame = ttk.Frame(main_frame)
-        header_frame.grid(row=0, column=0, sticky=(tk.W, tk.E), pady=(0, 10))
+        header_frame = tk.Frame(main_frame, bg="#e3f2fd", relief=tk.RAISED, bd=2, padx=15, pady=10)
+        header_frame.grid(row=0, column=0, sticky=(tk.W, tk.E), pady=(0, 15))
         header_frame.columnconfigure(0, weight=1)
         
-        # Title
-        title_label = ttk.Label(header_frame, text="CSV Operations", font=("Arial", 16, "bold"))
+        # Title with color
+        title_label = tk.Label(header_frame, text="CSV Operations", 
+                               font=("Arial", 18, "bold"), 
+                               bg="#e3f2fd", 
+                               fg="#1565C0")
         title_label.grid(row=0, column=0, sticky=tk.W)
         
-        # Author
-        author_label = ttk.Label(header_frame, text="By Kiran Beethoju", font=("Arial", 10, "italic"))
+        # Author with color
+        author_label = tk.Label(header_frame, text="By Kiran Beethoju", 
+                               font=("Arial", 11, "italic"), 
+                               bg="#e3f2fd", 
+                               fg="#424242")
         author_label.grid(row=1, column=0, sticky=tk.W, pady=(2, 0))
         
         # GitHub Repository Link
         repo_url = "https://github.com/kiranbeethoju/sqlAssist"
-        repo_label = ttk.Label(header_frame, text=repo_url, font=("Arial", 9), foreground="blue", cursor="hand2")
+        repo_label = tk.Label(header_frame, text=repo_url, 
+                             font=("Arial", 9), 
+                             bg="#e3f2fd",
+                             fg="#1976D2", 
+                             cursor="hand2",
+                             underline=True)
         repo_label.grid(row=2, column=0, sticky=tk.W, pady=(2, 0))
         repo_label.bind("<Button-1>", lambda e: self.open_url(repo_url))
-        repo_label.bind("<Enter>", lambda e: repo_label.config(foreground="darkblue"))
-        repo_label.bind("<Leave>", lambda e: repo_label.config(foreground="blue"))
-        
-        # Separator
-        separator = ttk.Separator(header_frame, orient='horizontal')
-        separator.grid(row=3, column=0, sticky=(tk.W, tk.E), pady=(8, 0))
+        repo_label.bind("<Enter>", lambda e: repo_label.config(fg="#0d47a1"))
+        repo_label.bind("<Leave>", lambda e: repo_label.config(fg="#1976D2"))
         
         # CSV Data Section
         csv_frame = ttk.LabelFrame(main_frame, text="CSV Data", padding="5")
@@ -70,31 +128,37 @@ class CSVOperationsApp:
         csv_frame.columnconfigure(0, weight=1)
         csv_frame.rowconfigure(0, weight=1)
         
-        self.csv_text = scrolledtext.ScrolledText(csv_frame, height=8, wrap=tk.NONE)
+        self.csv_text = scrolledtext.ScrolledText(csv_frame, height=8, wrap=tk.NONE, 
+                                                   font=("Consolas", 10),
+                                                   bg="#ffffff", fg="#212121")
         self.csv_text.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
         
         # Options Section
-        options_frame = ttk.LabelFrame(main_frame, text="Options", padding="5")
+        options_frame = ttk.LabelFrame(main_frame, text="Options", padding="8")
         options_frame.grid(row=2, column=0, sticky=(tk.W, tk.E), pady=(0, 10))
         options_frame.columnconfigure(1, weight=1)
         
         # Input delimiter
-        ttk.Label(options_frame, text="Input delimiter:").grid(row=0, column=0, sticky=tk.W, padx=(0, 5))
+        input_label = tk.Label(options_frame, text="Input delimiter:", 
+                              bg="#f0f0f0", fg="#424242", font=("Arial", 9, "bold"))
+        input_label.grid(row=0, column=0, sticky=tk.W, padx=(0, 5))
         input_delim_combo = ttk.Combobox(options_frame, textvariable=self.input_delimiter, 
                                          values=["LF", "CR", "CRLF", ", (Comma)", "; (Semicolon)", "| (Pipe)", "Tab"], 
-                                         state="readonly", width=15)
+                                         state="readonly", width=18)
         input_delim_combo.grid(row=0, column=1, sticky=tk.W, padx=(0, 20))
         
         # Output delimiter
-        ttk.Label(options_frame, text="Output delimiter:").grid(row=0, column=2, sticky=tk.W, padx=(0, 5))
+        output_label = tk.Label(options_frame, text="Output delimiter:", 
+                               bg="#f0f0f0", fg="#424242", font=("Arial", 9, "bold"))
+        output_label.grid(row=0, column=2, sticky=tk.W, padx=(0, 5))
         output_delim_combo = ttk.Combobox(options_frame, textvariable=self.output_delimiter,
                                           values=[", (Comma)", "; (Semicolon)", "| (Pipe)", "Tab", "LF", "CR", "CRLF"],
-                                          state="readonly", width=15)
+                                          state="readonly", width=18)
         output_delim_combo.grid(row=0, column=3, sticky=tk.W)
         
         # Checkboxes
-        checkbox_frame = ttk.Frame(options_frame)
-        checkbox_frame.grid(row=1, column=0, columnspan=4, sticky=tk.W, pady=(10, 0))
+        checkbox_frame = tk.Frame(options_frame, bg="#f0f0f0")
+        checkbox_frame.grid(row=1, column=0, columnspan=4, sticky=tk.W, pady=(12, 0))
         
         ttk.Checkbutton(checkbox_frame, text="Ignore enclosed quotes", 
                        variable=self.ignore_enclosed_quotes).grid(row=0, column=0, sticky=tk.W, padx=(0, 15))
@@ -106,12 +170,23 @@ class CSVOperationsApp:
                        variable=self.use_double_quotes).grid(row=0, column=3, sticky=tk.W)
         
         # Action Buttons
-        action_frame = ttk.Frame(options_frame)
-        action_frame.grid(row=2, column=0, columnspan=4, pady=(10, 0))
+        action_frame = tk.Frame(options_frame, bg="#f0f0f0")
+        action_frame.grid(row=2, column=0, columnspan=4, pady=(12, 0))
         
-        ttk.Button(action_frame, text="Prepare CSV", command=self.prepare_csv).grid(row=0, column=0, padx=5)
-        ttk.Button(action_frame, text="Get Unique", command=self.get_unique).grid(row=0, column=1, padx=5)
-        ttk.Button(action_frame, text="Get Duplicates", command=self.get_duplicates).grid(row=0, column=2, padx=5)
+        prepare_btn = ttk.Button(action_frame, text="Prepare CSV", 
+                                command=self.prepare_csv, 
+                                style='Action.TButton')
+        prepare_btn.grid(row=0, column=0, padx=5)
+        
+        unique_btn = ttk.Button(action_frame, text="Get Unique", 
+                              command=self.get_unique, 
+                              style='Action.TButton')
+        unique_btn.grid(row=0, column=1, padx=5)
+        
+        duplicates_btn = ttk.Button(action_frame, text="Get Duplicates", 
+                                  command=self.get_duplicates, 
+                                  style='Action.TButton')
+        duplicates_btn.grid(row=0, column=2, padx=5)
         
         # Output Section
         output_frame = ttk.LabelFrame(main_frame, text="Output", padding="5")
@@ -119,31 +194,50 @@ class CSVOperationsApp:
         output_frame.columnconfigure(0, weight=1)
         output_frame.rowconfigure(0, weight=1)
         
-        self.output_text = scrolledtext.ScrolledText(output_frame, height=8, wrap=tk.NONE)
+        self.output_text = scrolledtext.ScrolledText(output_frame, height=8, wrap=tk.NONE,
+                                                     font=("Consolas", 10),
+                                                     bg="#fff9c4", fg="#212121")
         self.output_text.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
         
         # Summary and Control Section
-        summary_frame = ttk.Frame(main_frame)
+        summary_frame = tk.Frame(main_frame, bg="#f0f0f0")
         summary_frame.grid(row=4, column=0, sticky=(tk.W, tk.E))
         summary_frame.columnconfigure(1, weight=1)
         
-        # Summary labels
-        self.total_count_label = ttk.Label(summary_frame, text="Total Count: 0")
+        # Summary labels with colors
+        self.total_count_label = tk.Label(summary_frame, text="Total Count: 0", 
+                                          bg="#f0f0f0", fg="#1976D2", 
+                                          font=("Arial", 10, "bold"))
         self.total_count_label.grid(row=0, column=0, sticky=tk.W, padx=(0, 20))
         
-        self.unique_count_label = ttk.Label(summary_frame, text="Unique records count: 0")
+        self.unique_count_label = tk.Label(summary_frame, text="Unique records count: 0", 
+                                           bg="#f0f0f0", fg="#388E3C", 
+                                           font=("Arial", 10, "bold"))
         self.unique_count_label.grid(row=0, column=1, sticky=tk.W, padx=(0, 20))
         
-        self.duplicate_count_label = ttk.Label(summary_frame, text="Duplicate records count: 0")
+        self.duplicate_count_label = tk.Label(summary_frame, text="Duplicate records count: 0", 
+                                              bg="#f0f0f0", fg="#D32F2F", 
+                                              font=("Arial", 10, "bold"))
         self.duplicate_count_label.grid(row=0, column=2, sticky=tk.W)
         
         # Control buttons
-        control_frame = ttk.Frame(main_frame)
-        control_frame.grid(row=5, column=0, sticky=tk.E, pady=(10, 0))
+        control_frame = tk.Frame(main_frame, bg="#f0f0f0")
+        control_frame.grid(row=5, column=0, sticky=tk.E, pady=(12, 0))
         
-        ttk.Button(control_frame, text="Select All", command=self.select_all).grid(row=0, column=0, padx=5)
-        ttk.Button(control_frame, text="Reset", command=self.reset).grid(row=0, column=1, padx=5)
-        ttk.Button(control_frame, text="Help", command=self.show_help).grid(row=0, column=2, padx=5)
+        select_btn = ttk.Button(control_frame, text="Select All & Copy", 
+                               command=self.select_all, 
+                               style='Control.TButton')
+        select_btn.grid(row=0, column=0, padx=5)
+        
+        reset_btn = ttk.Button(control_frame, text="Reset", 
+                              command=self.reset, 
+                              style='Reset.TButton')
+        reset_btn.grid(row=0, column=1, padx=5)
+        
+        help_btn = ttk.Button(control_frame, text="Help", 
+                             command=self.show_help, 
+                             style='Help.TButton')
+        help_btn.grid(row=0, column=2, padx=5)
         
     def get_delimiter_char(self, delimiter_name):
         """Convert delimiter name to actual character"""
@@ -208,16 +302,22 @@ class CSVOperationsApp:
             elif not self.use_double_quotes.get():
                 quote_char = ""
             
-            # Format output
+            # Format output - ensure proper comma separation
             output_lines = []
             for row in data:
                 if quote_char:
-                    formatted_row = output_delim.join([f'{quote_char}{field}{quote_char}' for field in row])
+                    formatted_row = output_delim.join([f'{quote_char}{str(field)}{quote_char}' for field in row])
                 else:
-                    formatted_row = output_delim.join(row)
+                    formatted_row = output_delim.join([str(field) for field in row])
                 output_lines.append(formatted_row)
             
-            output_text = output_delim.join(output_lines) if output_delim in ["\n", "\r", "\r\n"] else "\n".join(output_lines)
+            # Join rows with newline, but keep delimiter within rows
+            if output_delim in ["\n", "\r", "\r\n"]:
+                # If delimiter is a line break, join with it
+                output_text = output_delim.join(output_lines)
+            else:
+                # Otherwise, join rows with newlines, keeping delimiter within rows
+                output_text = "\n".join(output_lines)
             
             self.output_text.delete("1.0", tk.END)
             self.output_text.insert("1.0", output_text)
@@ -265,12 +365,15 @@ class CSVOperationsApp:
             output_lines = []
             for row in unique_data:
                 if quote_char:
-                    formatted_row = output_delim.join([f'{quote_char}{field}{quote_char}' for field in row])
+                    formatted_row = output_delim.join([f'{quote_char}{str(field)}{quote_char}' for field in row])
                 else:
-                    formatted_row = output_delim.join(row)
+                    formatted_row = output_delim.join([str(field) for field in row])
                 output_lines.append(formatted_row)
             
-            output_text = output_delim.join(output_lines) if output_delim in ["\n", "\r", "\r\n"] else "\n".join(output_lines)
+            if output_delim in ["\n", "\r", "\r\n"]:
+                output_text = output_delim.join(output_lines)
+            else:
+                output_text = "\n".join(output_lines)
             
             self.output_text.delete("1.0", tk.END)
             self.output_text.insert("1.0", output_text)
@@ -318,12 +421,15 @@ class CSVOperationsApp:
             output_lines = []
             for row in duplicate_records:
                 if quote_char:
-                    formatted_row = output_delim.join([f'{quote_char}{field}{quote_char}' for field in row])
+                    formatted_row = output_delim.join([f'{quote_char}{str(field)}{quote_char}' for field in row])
                 else:
-                    formatted_row = output_delim.join(row)
+                    formatted_row = output_delim.join([str(field) for field in row])
                 output_lines.append(formatted_row)
             
-            output_text = output_delim.join(output_lines) if output_delim in ["\n", "\r", "\r\n"] else "\n".join(output_lines)
+            if output_delim in ["\n", "\r", "\r\n"]:
+                output_text = output_delim.join(output_lines)
+            else:
+                output_text = "\n".join(output_lines)
             
             self.output_text.delete("1.0", tk.END)
             self.output_text.insert("1.0", output_text)
@@ -342,10 +448,29 @@ class CSVOperationsApp:
         self.duplicate_count_label.config(text=f"Duplicate records count: {duplicates}")
     
     def select_all(self):
-        """Select all text in output"""
-        self.output_text.tag_add(tk.SEL, "1.0", tk.END)
-        self.output_text.mark_set(tk.INSERT, "1.0")
-        self.output_text.see(tk.INSERT)
+        """Select all text in output and copy to clipboard"""
+        try:
+            # Get all text from output
+            content = self.output_text.get("1.0", tk.END).strip()
+            
+            if not content:
+                messagebox.showinfo("Info", "No content to copy.")
+                return
+            
+            # Clear clipboard and copy
+            self.root.clipboard_clear()
+            self.root.clipboard_append(content)
+            
+            # Also select in the text widget for visual feedback
+            self.output_text.tag_add(tk.SEL, "1.0", tk.END)
+            self.output_text.mark_set(tk.INSERT, "1.0")
+            self.output_text.see(tk.INSERT)
+            
+            # Show confirmation
+            messagebox.showinfo("Copied!", f"Content copied to clipboard!\n\n{len(content)} characters copied.")
+            
+        except Exception as e:
+            messagebox.showerror("Error", f"Error copying to clipboard: {str(e)}")
     
     def reset(self):
         """Reset all fields"""
@@ -385,7 +510,7 @@ class CSVOperationsApp:
 4. View results in the 'Output' section
 
 5. Use control buttons:
-   - Select All: Selects all output text for copying
+   - Select All & Copy: Copies all output text to clipboard automatically
    - Reset: Clears all data and resets options
    - Help: Shows this help dialog
 
@@ -402,4 +527,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
