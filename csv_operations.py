@@ -302,22 +302,29 @@ class CSVOperationsApp:
             elif not self.use_double_quotes.get():
                 quote_char = ""
             
-            # Format output - ensure proper comma separation
-            output_lines = []
-            for row in data:
-                if quote_char:
-                    formatted_row = output_delim.join([f'{quote_char}{str(field)}{quote_char}' for field in row])
-                else:
-                    formatted_row = output_delim.join([str(field) for field in row])
-                output_lines.append(formatted_row)
-            
-            # Join rows with newline, but keep delimiter within rows
+            # Format output - ensure proper delimiter separation
+            # If output delimiter is a line break, each row on separate line
+            # Otherwise, join all values with the delimiter
             if output_delim in ["\n", "\r", "\r\n"]:
-                # If delimiter is a line break, join with it
+                # Line break delimiter: each row on its own line
+                output_lines = []
+                for row in data:
+                    if quote_char:
+                        formatted_row = output_delim.join([f'{quote_char}{str(field)}{quote_char}' for field in row])
+                    else:
+                        formatted_row = output_delim.join([str(field) for field in row])
+                    output_lines.append(formatted_row)
                 output_text = output_delim.join(output_lines)
             else:
-                # Otherwise, join rows with newlines, keeping delimiter within rows
-                output_text = "\n".join(output_lines)
+                # Non-line break delimiter: join all values with delimiter
+                all_values = []
+                for row in data:
+                    for field in row:
+                        if quote_char:
+                            all_values.append(f'{quote_char}{str(field)}{quote_char}')
+                        else:
+                            all_values.append(str(field))
+                output_text = output_delim.join(all_values)
             
             self.output_text.delete("1.0", tk.END)
             self.output_text.insert("1.0", output_text)
@@ -362,18 +369,27 @@ class CSVOperationsApp:
             elif not self.use_double_quotes.get():
                 quote_char = ""
             
-            output_lines = []
-            for row in unique_data:
-                if quote_char:
-                    formatted_row = output_delim.join([f'{quote_char}{str(field)}{quote_char}' for field in row])
-                else:
-                    formatted_row = output_delim.join([str(field) for field in row])
-                output_lines.append(formatted_row)
-            
+            # Format output with proper delimiter
             if output_delim in ["\n", "\r", "\r\n"]:
+                # Line break delimiter: each row on its own line
+                output_lines = []
+                for row in unique_data:
+                    if quote_char:
+                        formatted_row = output_delim.join([f'{quote_char}{str(field)}{quote_char}' for field in row])
+                    else:
+                        formatted_row = output_delim.join([str(field) for field in row])
+                    output_lines.append(formatted_row)
                 output_text = output_delim.join(output_lines)
             else:
-                output_text = "\n".join(output_lines)
+                # Non-line break delimiter: join all values with delimiter
+                all_values = []
+                for row in unique_data:
+                    for field in row:
+                        if quote_char:
+                            all_values.append(f'{quote_char}{str(field)}{quote_char}')
+                        else:
+                            all_values.append(str(field))
+                output_text = output_delim.join(all_values)
             
             self.output_text.delete("1.0", tk.END)
             self.output_text.insert("1.0", output_text)
@@ -418,18 +434,27 @@ class CSVOperationsApp:
             elif not self.use_double_quotes.get():
                 quote_char = ""
             
-            output_lines = []
-            for row in duplicate_records:
-                if quote_char:
-                    formatted_row = output_delim.join([f'{quote_char}{str(field)}{quote_char}' for field in row])
-                else:
-                    formatted_row = output_delim.join([str(field) for field in row])
-                output_lines.append(formatted_row)
-            
+            # Format output with proper delimiter
             if output_delim in ["\n", "\r", "\r\n"]:
+                # Line break delimiter: each row on its own line
+                output_lines = []
+                for row in duplicate_records:
+                    if quote_char:
+                        formatted_row = output_delim.join([f'{quote_char}{str(field)}{quote_char}' for field in row])
+                    else:
+                        formatted_row = output_delim.join([str(field) for field in row])
+                    output_lines.append(formatted_row)
                 output_text = output_delim.join(output_lines)
             else:
-                output_text = "\n".join(output_lines)
+                # Non-line break delimiter: join all values with delimiter
+                all_values = []
+                for row in duplicate_records:
+                    for field in row:
+                        if quote_char:
+                            all_values.append(f'{quote_char}{str(field)}{quote_char}')
+                        else:
+                            all_values.append(str(field))
+                output_text = output_delim.join(all_values)
             
             self.output_text.delete("1.0", tk.END)
             self.output_text.insert("1.0", output_text)
