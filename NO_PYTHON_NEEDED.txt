@@ -1,0 +1,66 @@
+═══════════════════════════════════════════════════════════════
+  BUILD WINDOWS EXE WITHOUT INSTALLING PYTHON
+═══════════════════════════════════════════════════════════════
+
+You have 3 main options:
+
+═══════════════════════════════════════════════════════════════
+  OPTION 1: GITHUB ACTIONS (RECOMMENDED ⭐)
+═══════════════════════════════════════════════════════════════
+
+✅ NO Python installation needed
+✅ Builds automatically in the cloud
+✅ Free and easy
+
+STEPS:
+1. Create GitHub account (free): github.com
+2. Create new repository
+3. Upload your project files
+4. Go to Actions tab → Run workflow
+5. Download EXE from Artifacts (after 2-3 minutes)
+
+📖 See: GITHUB_BUILD_GUIDE.md for detailed instructions
+
+═══════════════════════════════════════════════════════════════
+  OPTION 2: PORTABLE PYTHON (No Installation)
+═══════════════════════════════════════════════════════════════
+
+✅ No system-wide Python installation
+✅ Extract and use
+
+STEPS:
+1. Download "Windows embeddable package" from python.org
+2. Extract to: PortablePython folder
+3. Run: setup-portable-python.bat
+4. EXE will be in: dist\CSVOperations.exe
+
+📖 See: BUILD_WITHOUT_PYTHON.md for details
+
+═══════════════════════════════════════════════════════════════
+  OPTION 3: ASK SOMEONE ELSE
+═══════════════════════════════════════════════════════════════
+
+✅ Easiest if you know someone with Python
+
+STEPS:
+1. Share the project folder
+2. They run: build_exe.bat
+3. They send you: dist\CSVOperations.exe
+
+═══════════════════════════════════════════════════════════════
+  QUICK START - GITHUB METHOD
+═══════════════════════════════════════════════════════════════
+
+1. Go to: github.com (create account if needed)
+2. Click "+" → New repository
+3. Name it: CSVOperations
+4. Upload all project files
+5. Go to: Actions tab
+6. Click: "Run workflow"
+7. Wait 2-3 minutes
+8. Download EXE from Artifacts section
+
+That's it! No Python on your computer needed!
+
+═══════════════════════════════════════════════════════════════
+

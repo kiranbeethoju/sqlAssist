@@ -1,0 +1,32 @@
+═══════════════════════════════════════════════════════════════
+  QUICK BUILD INSTRUCTIONS FOR WINDOWS EXE
+═══════════════════════════════════════════════════════════════
+
+⚠️  MUST BUILD ON WINDOWS COMPUTER ⚠️
+
+METHOD 1: EASIEST (Double-click)
+─────────────────────────────────
+1. Copy this folder to a Windows computer
+2. Double-click: build_exe.bat
+3. Wait for completion
+4. Find EXE in: dist\CSVOperations.exe
+
+METHOD 2: COMMAND LINE
+───────────────────────
+1. Open Command Prompt (Win+R, type "cmd")
+2. Navigate to this folder:
+   cd C:\path\to\SqlAssist
+
+3. Install PyInstaller:
+   pip install pyinstaller
+
+4. Build EXE:
+   pyinstaller --onefile --noconsole --name "CSVOperations" csv_operations.py
+
+5. Done! EXE is in: dist\CSVOperations.exe
+
+═══════════════════════════════════════════════════════════════
+  YOUR EXE FILE WILL BE: dist\CSVOperations.exe
+  (Approximately 10-15 MB, standalone, no installation needed)
+═══════════════════════════════════════════════════════════════
+

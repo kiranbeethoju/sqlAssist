@@ -1,0 +1,95 @@
+═══════════════════════════════════════════════════════════════
+  HOW TO GENERATE WINDOWS EXE - SIMPLE GUIDE
+═══════════════════════════════════════════════════════════════
+
+⚠️  IMPORTANT: You MUST build on a Windows computer ⚠️
+
+═══════════════════════════════════════════════════════════════
+  METHOD 1: EASIEST WAY (Double-Click)
+═══════════════════════════════════════════════════════════════
+
+Step 1: Copy this entire folder to a Windows computer
+
+Step 2: Double-click the file: build_exe.bat
+
+Step 3: Wait for it to finish (takes 1-2 minutes)
+
+Step 4: Find your EXE file in: dist\CSVOperations.exe
+
+✅ DONE! Just double-click CSVOperations.exe to run it!
+
+═══════════════════════════════════════════════════════════════
+  METHOD 2: MANUAL BUILD (Command Prompt)
+═══════════════════════════════════════════════════════════════
+
+Step 1: Open Command Prompt
+   - Press Windows Key + R
+   - Type: cmd
+   - Press Enter
+
+Step 2: Navigate to project folder
+   Type: cd C:\path\to\SqlAssist
+   (Replace with your actual folder path)
+
+Step 3: Install PyInstaller
+   Type: pip install pyinstaller
+   Press Enter and wait for installation
+
+Step 4: Build the EXE
+   Type: pyinstaller --onefile --noconsole --name "CSVOperations" csv_operations.py
+   Press Enter and wait (takes 1-2 minutes)
+
+Step 5: Find your EXE
+   Location: dist\CSVOperations.exe
+   Size: ~10-15 MB
+
+✅ DONE! Double-click CSVOperations.exe to run!
+
+═══════════════════════════════════════════════════════════════
+  PREREQUISITES (If you don't have them)
+═══════════════════════════════════════════════════════════════
+
+1. Python 3.8 or higher
+   Download: https://www.python.org/downloads/
+   ⚠️ IMPORTANT: Check "Add Python to PATH" during installation!
+
+2. Verify Python is installed:
+   Open Command Prompt and type: python --version
+   Should show: Python 3.x.x
+
+═══════════════════════════════════════════════════════════════
+  TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════
+
+Problem: "Python is not recognized"
+Solution: 
+  - Reinstall Python from python.org
+  - Make sure to check "Add Python to PATH"
+  - Restart Command Prompt
+
+Problem: "pip is not recognized"
+Solution:
+  - Use: python -m pip install pyinstaller
+  - Or reinstall Python with PATH option
+
+Problem: Antivirus blocks the EXE
+Solution:
+  - This is a false positive (common with PyInstaller)
+  - Add exception in your antivirus
+  - Or temporarily disable antivirus during build
+
+═══════════════════════════════════════════════════════════════
+  WHAT YOU GET
+═══════════════════════════════════════════════════════════════
+
+After building, you'll have:
+  📁 dist\CSVOperations.exe  ← This is your standalone app!
+
+The EXE file:
+  ✅ Works on any Windows computer
+  ✅ No Python installation needed
+  ✅ No dependencies required
+  ✅ Just copy and run!
+
+═══════════════════════════════════════════════════════════════
+

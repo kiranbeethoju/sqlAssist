@@ -1,0 +1,32 @@
+═══════════════════════════════════════════════════════════════
+  MAC COMPATIBLE FILE LOCATION
+═══════════════════════════════════════════════════════════════
+
+✅ macOS App Bundle Created Successfully!
+
+📍 Location:
+   dist/CSVOperations.app
+
+📦 Size: ~26 MB
+
+🚀 How to Run:
+   1. Navigate to: dist/CSVOperations.app
+   2. Double-click the app icon
+   3. The application will launch!
+
+💡 Alternative ways to run:
+   - Right-click → Open
+   - From Terminal: open dist/CSVOperations.app
+   - Drag to Applications folder for permanent access
+
+⚠️  First Time Running:
+   macOS may show a security warning. If so:
+   1. Right-click the app
+   2. Select "Open"
+   3. Click "Open" in the security dialog
+   (This only needs to be done once)
+
+═══════════════════════════════════════════════════════════════
+  The app is standalone - no Python installation needed!
+═══════════════════════════════════════════════════════════════
+

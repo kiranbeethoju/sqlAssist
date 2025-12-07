@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Build files
+build/
+dist/
+*.spec
+*.egg-info/
+
+# macOS
+.DS_Store
+*.app/Contents/MacOS/*
+
+# Windows
+*.exe
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.log
+
