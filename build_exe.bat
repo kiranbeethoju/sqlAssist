@@ -1,5 +1,5 @@
 @echo off
-echo Building CSV Operations EXE...
+echo Building CSV Operations v1.2.0...
 echo.
 
 REM Check if Python is installed
@@ -15,10 +15,8 @@ echo Installing/Updating PyInstaller...
 pip install --upgrade pyinstaller
 
 echo.
-echo Creating EXE file...
-REM --onedir  : folder-based build - starts MUCH faster than --onefile
-REM             because it doesn't need to extract to a temp folder on every launch
-REM --add-data: bundles kblogo.png so the icon is available inside the build
+echo Creating app folder (--onedir = fast startup, no temp-extract)...
+
 pyinstaller ^
     --onedir ^
     --noconsole ^
@@ -34,14 +32,18 @@ if errorlevel 1 (
 )
 
 echo.
-echo ========================================
-echo Build completed successfully!
+echo ================================================
+echo  Build completed successfully!
 echo.
-echo Your app folder is located at:
-echo dist\CSVOperations\
+echo  App folder : dist\CSVOperations\
+echo  Run with  : dist\CSVOperations\CSVOperations.exe
 echo.
-echo Run dist\CSVOperations\CSVOperations.exe to launch.
-echo (You can zip the entire dist\CSVOperations\ folder for distribution.)
-echo ========================================
+echo  To distribute: zip the entire dist\CSVOperations\ folder.
+echo ================================================
+echo.
+echo  OPTIONAL: To sign the EXE so Windows shows your name
+echo  instead of "Unknown Publisher", run:
+echo.
+echo    powershell -ExecutionPolicy Bypass -File sign_exe.ps1
 echo.
 pause
