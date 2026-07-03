@@ -23,7 +23,14 @@ echo "Creating macOS app bundle..."
 rm -rf build dist CSVOperations.spec
 
 # Build the app
-pyinstaller --onedir --windowed --name "CSVOperations" csv_operations.py
+# --onedir  : unpacked folder — loads much faster than --onefile on every launch
+# --add-data: bundles kblogo.png so it is available as a resource inside the app
+pyinstaller \
+    --onedir \
+    --windowed \
+    --name "CSVOperations" \
+    --add-data "kblogo.png:." \
+    csv_operations.py
 
 if [ $? -eq 0 ]; then
     echo ""
@@ -41,4 +48,3 @@ else
     echo "ERROR: Build failed!"
     exit 1
 fi
-

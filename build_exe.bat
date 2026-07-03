@@ -16,7 +16,15 @@ pip install --upgrade pyinstaller
 
 echo.
 echo Creating EXE file...
-pyinstaller --onefile --noconsole --name "CSVOperations" csv_operations.py
+REM --onedir  : folder-based build - starts MUCH faster than --onefile
+REM             because it doesn't need to extract to a temp folder on every launch
+REM --add-data: bundles kblogo.png so the icon is available inside the build
+pyinstaller ^
+    --onedir ^
+    --noconsole ^
+    --name "CSVOperations" ^
+    --add-data "kblogo.png;." ^
+    csv_operations.py
 
 if errorlevel 1 (
     echo.
@@ -29,9 +37,11 @@ echo.
 echo ========================================
 echo Build completed successfully!
 echo.
-echo Your EXE file is located at:
-echo dist\CSVOperations.exe
+echo Your app folder is located at:
+echo dist\CSVOperations\
+echo.
+echo Run dist\CSVOperations\CSVOperations.exe to launch.
+echo (You can zip the entire dist\CSVOperations\ folder for distribution.)
 echo ========================================
 echo.
 pause
-
